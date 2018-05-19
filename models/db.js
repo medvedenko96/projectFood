@@ -1,10 +1,10 @@
-const mongoose = require('mongoose'),
-    dbURI = 'mongodb://127.0.0.1:27017/db';
+const mongoose = require('mongoose');
+const CONNECTION_URI = process.env.dbURI || 'mongodb://127.0.0.1:27017/db';
 
-mongoose.connect(dbURI);
+mongoose.connect(CONNECTION_URI);
 
 mongoose.connection.on('connected', function () {
-    console.log('Mongoose connected to ' + dbURI);
+    console.log('Mongoose connected to ' + CONNECTION_URI);
 });
 
 mongoose.connection.on('error', function (err) {
