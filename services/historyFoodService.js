@@ -36,3 +36,7 @@ module.exports.add = (req, res) => {
         });
 };
 
+module.exports.delete = () => {
+    let user = verifyToken(req.headers.authorization);
+
+};
