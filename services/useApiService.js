@@ -63,8 +63,7 @@ module.exports.getRecipe = (req, res) => {
         axios.get(url)
             .then(function (response) {
                 let arr = [];
-                for(let i=0; i<9; i++){
-                    //random = Math.round(Math.random() * (response.data.hits.length - 1) + 1);
+                for(let i = 0; i < 9; i++){
                     arr.push(response.data.hits[i])
                 }
 
