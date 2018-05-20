@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const History = mongoose.model('HistorySchema');
 const verifyToken = require('../utils/verifyToken');
-require ('dotenv'). config ();
+
 
 let responseJSON = (res, status, content) => {
     res.status(status);
@@ -37,9 +37,7 @@ module.exports.add = (req, res) => {
         });
 };
 
-
-
-module.exports.delete = function (req, res) {
+/*module.exports.delete = function (req, res) {
     let user = verifyToken(req.headers.authorization);
 
 
@@ -55,5 +53,29 @@ module.exports.delete = function (req, res) {
                     throw new  Error
                 }
             });
+        responseJSON(res, 200, {
+            'message': "delete"
+        });
+    });
+};*/
+
+module.exports.readAll = (req, res) => {
+    let user = verifyToken(req.headers.authorization);
+
+    let recipeAll = [];
+    User.findOne({_id : user._id}, function(err, documentUser) {
+        if (err) {throw new Error}
+
+        documentUser.historyFood.forEach( async function (idRecipe) {
+
+            await History.findOne({_id : idRecipe}, function (err, documentHistory) {
+
+                if (err) {throw new Error}
+                recipeAll.push(documentHistory.dish);
+
+            });
+            responseJSON(res, 200, recipeAll);
+
+        })
     });
 };

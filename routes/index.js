@@ -13,15 +13,18 @@ router.post('/register', authService.register);
 router.post('/login', authService.login);
 
 //profile
-router.get('/user/:nickname', userProfile.readOne);
-router.put('/user/:nickname', userProfile.update);
-router.delete('/user/:nickname', userProfile.delete);
+router.get('/user', userProfile.readOne);
+router.put('/user-update', userProfile.update);
+router.delete('/user-del', userProfile.delete);
 
 
 //Recipe
+
+router.get('/get-recipe', historyFood.readAll);
 router.post('/recipe', searchRecipe.getRecipe);
 
 router.post('/add-recipe', historyFood.add);
-router.put('/del-recipe', historyFood.delete);
+//router.put('/del-recipe', historyFood.delete);
+router.get('/get-recipe', historyFood.readAll);
 
 module.exports = router;

@@ -9,12 +9,9 @@ const verifyToken = require('../utils/verifyToken');
 
 
 module.exports.readOne = function (req, res) {
-    if (req.params.nickname === undefined) {
-        responseJSON(res, 400, {
-            "message": "Nickname is undefined"
-        })
-    }
-    User.findOne({nickname : req.params.nickname}, function(err, document) {
+    let user = verifyToken(req.headers.authorization);
+
+    User.findOne({_id : user._id}, function(err, document) {
         if (err) {throw new Error}
         responseJSON(res, 200, document)
     });
@@ -22,12 +19,6 @@ module.exports.readOne = function (req, res) {
 
 module.exports.update = function (req, res) {
     let user = verifyToken(req.headers.authorization);
-
-    if (req.params.nickname === undefined) {
-        responseJSON(res, 400, {
-            "message": "Nickname is undefined"
-        })
-    }
 
     function calories (weight, growth, age, sex) {
         if (sex === "man") {
