@@ -78,7 +78,9 @@ userSchema.methods.generateJwt = function () {
 const SECRET = process.env.SECRET || 'EDWQCUNTHR3M4857CRMXQGZIWUSNYD452MCQXE-FR4WCXZ4TXGERFDSC435WXZFR4E-43RXF4ZRWEDVFX4EGRQWRXzd243rctgtrf-43txqfwzdvgerxwgdf';
     return jwt.sign({
         _id: this._id,
-        nickname: this.nickname
+        nickname: this.nickname,
+            normalCalories : this.normalCalories
+
     },
         SECRET,
     {

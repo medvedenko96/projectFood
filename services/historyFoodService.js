@@ -19,6 +19,7 @@ module.exports.add = (req, res) => {
             responseJSON(res, 404, err);
         } else {
             responseJSON(res, 200, {
+                "id" : newDish._id,
                 'message': "Add dish"
             });
         }
@@ -36,7 +37,23 @@ module.exports.add = (req, res) => {
         });
 };
 
-module.exports.delete = () => {
+
+
+module.exports.delete = function (req, res) {
     let user = verifyToken(req.headers.authorization);
 
+
+    User.findOne({_id: user._id}, function (err, documentUser) {
+        if (err) {
+            return res.status(500).send(err.message)
+        }
+
+        User.update( {_id: documentUser._id},
+            {$pull: { historyFood: req.body.id}},
+            (err) => {
+                if(err) {
+                    throw new  Error
+                }
+            });
+    });
 };

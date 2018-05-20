@@ -54,6 +54,16 @@ function calories (weight, growth, age, sex) {
     }
 }
 
+function activ(value, activity) {
+    if (activity === 'gain') {
+        return value * 1.15
+    } else if (activity === 'maintain') {
+        return value
+    } else if (activity ===  'lose') {
+        return value * 0.8
+    }
+}
+
 function IMT (growth, weight) {
     growth /= 100;
     return weight / (Math.pow(growth, 2))
@@ -68,7 +78,7 @@ function resultIMT(value) {
         return 'Надлишкова маса'
     }
 }
-    
+    //calories(req.body.weight, req.body.growth, req.body.age, req.body.sex)
     let newUser = new User();
     newUser.nickname = req.body.nickname.toLowerCase();
     newUser.weight = req.body.weight;
@@ -76,7 +86,7 @@ function resultIMT(value) {
     newUser.age = req.body.age;
     newUser.activity = req.body.activity;
     newUser.sex = req.body.sex;
-    newUser.normalCalories = calories(req.body.weight, req.body.growth, req.body.age, req.body.sex);
+    newUser.normalCalories = activ(calories(req.body.weight, req.body.growth, req.body.age, req.body.sex), req.body.activity);
     newUser.sex = req.body.sex;
     newUser.IMT = IMT(req.body.growth, req.body.weight);
     newUser.resultIMT = resultIMT(IMT(req.body.growth, req.body.weight));

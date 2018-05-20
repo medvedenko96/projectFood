@@ -19,7 +19,9 @@ router.delete('/user/:nickname', userProfile.delete);
 
 
 //Recipe
-router.post('/recipe/:nickname', searchRecipe.getRecipe);
+router.post('/recipe', searchRecipe.getRecipe);
+
 router.post('/add-recipe', historyFood.add);
+router.put('/del-recipe', historyFood.delete);
 
 module.exports = router;

@@ -52,6 +52,16 @@ module.exports.update = function (req, res) {
         }
     }
 
+    function activ(value, activity) {
+        if (activity === 'gain') {
+            return value * 1.15
+        } else if (activity === 'maintain') {
+            return value
+        } else if (activity ===  'lose') {
+            return value * 0.8
+        }
+    }
+
     User.findOne({_id : user._id}, function(err, user) {
 
         if (err) {throw new Error}
@@ -73,9 +83,10 @@ module.exports.update = function (req, res) {
         if (req.body.sex !== undefined) {
             user.sex = req.body.sex
         }
-            user.normalCalories = calories(user.weight || req.body.weight,
+
+            user.normalCalories = activ(calories(user.weight || req.body.weight,
                 user.growth || req.body.growth,
-                user.age || req.body.age, user.activity || req.body.activity);
+                user.age || req.body.age, user.activity || req.body.activity),user.activity || req.body.activity);
 
             user.IMT =  IMT(req.body.growth || user.growth, req.body.weight || user.weight);
 
@@ -104,6 +115,7 @@ module.exports.delete = function (req, res) {
             "message": "Nickname is undefined"
         })
     }
+
     User.findOne({_id: user._id}, function (err, user) {
         if (err) {
             return res.status(500).send(err.message)
